@@ -26,7 +26,7 @@ class Hand:
             fingersCoordinatesVector = vector.create_finger_coordinates_vector(self.fingersCoordinates)
             normalVector = vector.create_normal_vector(self.fingersCoordinates)
             fingerAngles = vector.get_fingers_angle(fingersCoordinatesVector, normalVector)
-            print(fingerAngles)
+            return fingerAngles
         except:
-            print("Waiting hand")
-            pass
+            fingerAngles = []
+            return fingerAngles

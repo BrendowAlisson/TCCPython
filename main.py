@@ -1,5 +1,5 @@
 import cv2
-from includes import hands
+from includes import hands, mqtt
 
 wCam, hCam = 640, 480
 cap = cv2.VideoCapture(0)
@@ -7,15 +7,17 @@ cap.set(3, wCam)
 cap.set(4, hCam)
 
 myHand = hands.Hand()
+mqttServer = mqtt.MQTT()
 
 def main():
+    mqttServer.client.loop_start()
     while True:
         sucess, img = cap.read()
         x, y, c = img.shape
         frameBGR = cv2.flip(img, 1)
         frameRGB = cv2.cvtColor(frameBGR, cv2.COLOR_BGR2RGB)
         myHand.get_hand_coordinates_in_video(frameRGB, frameBGR, x, y)
-        myHand.get_fingers_angle()
+        mqttServer.publish_message(myHand.get_fingers_angle())
         cv2.imshow('output', frameBGR)
 
         if cv2.waitKey(1) == ord('q'):
