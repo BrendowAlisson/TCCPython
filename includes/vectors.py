@@ -8,7 +8,8 @@ class Vector:
         self.positionFingersMCP = {"pinky": 17, "ring": 13, "middle": 9, "index": 5, "thumb": 2}
         self.orderFingersInVector = {"pinky": 0, "ring": 1, "middle": 2, "index": 3, "thumb": 4}
         self.wristPosition = 0
-        self.angleZeroInRadian = 1
+        self.angleZeroInDegrees = 0
+        self.angleDegrees = 0
     
     def create_finger_coordinates_vector(self, fingersCoordinates):
         vectorCoordinates = []
@@ -60,18 +61,26 @@ class Vector:
         angleDegrees = math.acos(radians) * 180 / math.pi
         return angleDegrees
 
+    def put_the_angle_in_the_range(self):
+        if(utils.is_less_than_0(self.angleDegrees)):
+            self.angleDegrees = 0
+        elif(utils.is_greater_than_180(self.angleDegrees)):
+            self.angleDegrees = 180
+
     def get_fingers_angle(self, fingerVector, normalVector):
         fingersAnglesDegrees = []
         for finger in range(0, len(fingerVector)):
+            angleRadians = self.get_angle_in_radians(fingerVector, normalVector, finger)
             if(utils.is_finger_thumb(finger)):
                 if(utils.is_axis_x_positive(fingerVector[finger][0])):
-                    angleRadians = self.angleZeroInRadian
+                    self.angleDegrees = 80 + self.transform_radians_in_degrees(angleRadians)
                 else:
-                    angleRadians = self.get_angle_in_radians(fingerVector, normalVector, finger)
+                    self.angleDegrees = self.angleZeroInDegrees
             else:
                 if(utils.is_axis_y_positive(fingerVector[finger][1])):
-                    angleRadians = self.angleZeroInRadian
+                    self.angleDegrees = 80 + self.transform_radians_in_degrees(angleRadians)
                 else:
-                    angleRadians = self.get_angle_in_radians(fingerVector, normalVector, finger)
-            fingersAnglesDegrees.append(self.transform_radians_in_degrees(angleRadians))
+                    self.angleDegrees = - self.transform_radians_in_degrees(angleRadians) + 85
+            self.put_the_angle_in_the_range()
+            fingersAnglesDegrees.append(self.angleDegrees)
         return fingersAnglesDegrees

@@ -12,8 +12,8 @@ mqttServer = mqtt.MQTT()
 def main():
     mqttServer.client.loop_start()
     while True:
-        sucess, img = cap.read()
-        x, y, c = img.shape
+        _, img = cap.read()
+        x, y, _ = img.shape
         frameBGR = cv2.flip(img, 1)
         frameRGB = cv2.cvtColor(frameBGR, cv2.COLOR_BGR2RGB)
         myHand.get_hand_coordinates_in_video(frameRGB, frameBGR, x, y)
