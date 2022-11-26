@@ -16,8 +16,6 @@ class Hand:
         if self.result.multi_hand_landmarks:
             for handCoordinates in self.result.multi_hand_landmarks:
                 for id, coordinates in enumerate(handCoordinates.landmark):
-                    coordinatex = int(coordinates.x * y)
-                    coordinatey = int(coordinates.y * x)
                     self.fingersCoordinates.append([id, coordinates.x, coordinates.y, coordinates.z])
                 self.mpDraw.draw_landmarks(frameOutput, handCoordinates, self.mpHands.HAND_CONNECTIONS)
 
