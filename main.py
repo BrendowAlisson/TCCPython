@@ -13,10 +13,9 @@ def main():
     mqttServer.client.loop_start()
     while True:
         _, img = cap.read()
-        x, y, _ = img.shape
         frameBGR = cv2.flip(img, 1)
         frameRGB = cv2.cvtColor(frameBGR, cv2.COLOR_BGR2RGB)
-        myHand.get_hand_coordinates_in_video(frameRGB, frameBGR, x, y)
+        myHand.get_hand_coordinates_in_video(frameRGB, frameBGR)
         mqttServer.publish_message(myHand.get_fingers_angle())
         cv2.imshow('output', frameBGR)
 

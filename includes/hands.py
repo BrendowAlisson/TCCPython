@@ -10,7 +10,7 @@ class Hand:
         self.hands = self.mpHands.Hands(max_num_hands=1, min_detection_confidence=0.7)
         self.mpDraw = mp.solutions.drawing_utils
 
-    def get_hand_coordinates_in_video(self, frameInput, frameOutput, x, y):
+    def get_hand_coordinates_in_video(self, frameInput, frameOutput):
         self.result = self.hands.process(frameInput)
         self.fingersCoordinates = []
         if self.result.multi_hand_landmarks:

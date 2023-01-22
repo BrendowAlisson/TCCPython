@@ -73,14 +73,14 @@ class Vector:
             angleRadians = self.get_angle_in_radians(fingerVector, normalVector, finger)
             if(utils.is_finger_thumb(finger)):
                 if(utils.is_axis_x_positive(fingerVector[finger][0])):
-                    self.angleDegrees = 80 + self.transform_radians_in_degrees(angleRadians)
+                    self.angleDegrees = 90 + self.transform_radians_in_degrees(angleRadians)
                 else:
                     self.angleDegrees = self.angleZeroInDegrees
             else:
                 if(utils.is_axis_y_positive(fingerVector[finger][1])):
-                    self.angleDegrees = 80 + self.transform_radians_in_degrees(angleRadians)
+                    self.angleDegrees = 90 + self.transform_radians_in_degrees(angleRadians)
                 else:
-                    self.angleDegrees = - self.transform_radians_in_degrees(angleRadians) + 85
+                    self.angleDegrees = - self.transform_radians_in_degrees(angleRadians) + 90
             self.put_the_angle_in_the_range()
             fingersAnglesDegrees.append(self.angleDegrees)
         return fingersAnglesDegrees
