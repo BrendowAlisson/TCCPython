@@ -10,14 +10,14 @@ class Hand:
         self.hands = self.mpHands.Hands(max_num_hands=1, min_detection_confidence=0.7)
         self.mpDraw = mp.solutions.drawing_utils
 
-    def get_hand_coordinates_in_video(self, frameInput, frameOutput):
-        self.result = self.hands.process(frameInput)
+    def get_hand_coordinates_in_video(self, frame):
+        self.result = self.hands.process(frame)
         self.fingersCoordinates = []
         if self.result.multi_hand_landmarks:
             for handCoordinates in self.result.multi_hand_landmarks:
                 for id, coordinates in enumerate(handCoordinates.landmark):
                     self.fingersCoordinates.append([id, coordinates.x, coordinates.y, coordinates.z])
-                self.mpDraw.draw_landmarks(frameOutput, handCoordinates, self.mpHands.HAND_CONNECTIONS)
+                self.mpDraw.draw_landmarks(frame, handCoordinates, self.mpHands.HAND_CONNECTIONS)
 
     def get_fingers_angle(self):
         try:

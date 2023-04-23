@@ -13,11 +13,10 @@ def main():
     mqttServer.client.loop_start()
     while True:
         _, img = cap.read()
-        frameBGR = cv2.flip(img, 1)
-        frameRGB = cv2.cvtColor(frameBGR, cv2.COLOR_BGR2RGB)
-        myHand.get_hand_coordinates_in_video(frameRGB, frameBGR)
+        frame = cv2.flip(img, 1)
+        myHand.get_hand_coordinates_in_video(frame)
         mqttServer.publish_message(myHand.get_fingers_angle())
-        cv2.imshow('output', frameBGR)
+        cv2.imshow('output', frame)
 
         if cv2.waitKey(1) == ord('q'):
             break
